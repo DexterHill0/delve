@@ -1,3 +1,5 @@
+pub use delve_derive::*;
+
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub enum ParseError {
     VariantNotFound,
@@ -35,14 +37,17 @@ pub trait ModifyField<F, V> {
     fn set_field(&mut self, field: F, value: V) -> Option<()>;
 }
 
-// EnumVariantCount, EnumVariantNames, EnumFromString, EnumFields, EnumTuples, EnumToString, EnumHasVariant, EnumDiscriminant
+// EnumVariantCount, EnumVariantNames, EnumFromString, EnumFields, EnumTuples, EnumToStr, EnumHasVariant, EnumDiscriminant
 // Enum
 
 // #[derive()]
-// #[blah(rename_all = "foo")] // EnumToString, EnumFromString, EnumVariantNames, EnumFieldNames
+// #[blah(rename_all = "snake_case")]
+// #[blah(rename_variants = "snake_case")]
+// #[blah(rename_fields = "snake_case")]
 // enum Foo {
 //     #[blah(rename_variant = "bar")]
 //     #[blah(from = "blue", from = "b")]
+//     #[blah(to = "__foo")]
 //     Foo,
 
 //     #[blah(skip)]

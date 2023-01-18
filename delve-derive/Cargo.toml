@@ -14,7 +14,8 @@ proc-macro = true
 name = "delve_derive"
 
 [dependencies]
-heck = "0.4"
+Inflector = "0.11.4"
 proc-macro2 = "1.0"
 quote = "1.0"
 syn = { version = "1.0", features = ["parsing", "extra-traits"] }
+darling = "0.14.2"
