@@ -2,12 +2,12 @@ use proc_macro2::TokenStream;
 use quote::quote;
 use syn::{Data, DeriveInput};
 
-use crate::not_an_enum;
+use crate::utils::syn_err;
 
 pub(crate) fn inner_variant_count(input: &DeriveInput) -> syn::Result<TokenStream> {
     let count = match &input.data {
         Data::Enum(v) => v.variants.len(),
-        _ => return Err(not_an_enum()),
+        _ => syn_err!("This macro is only supported for enums."),
     };
 
     let name = &input.ident;

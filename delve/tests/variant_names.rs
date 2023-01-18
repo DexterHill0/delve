@@ -32,13 +32,14 @@ fn test_plain() {
 fn test_attrs() {
     #[allow(dead_code)]
     #[derive(Debug, EnumVariantNames)]
-    #[delve(rename_variants = "uppercase")]
+    #[delve(rename_variants = "uppercase")] // `rename_variants` takes priority over `rename_all`
+    #[delve(rename_all = "lowercase")]
     enum Week {
         #[delve(skip)]
         Sunday,
         Monday,
         Tuesday,
-        #[delve(rename_variant = "wed_nes_day")]
+        #[delve(rename_variant = "wed_nes_day")] // `rename_variant` takes priority over both
         Wednesday,
         Thursday,
         Friday,

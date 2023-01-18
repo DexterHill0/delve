@@ -1,12 +1,11 @@
 use darling::FromAttributes;
 use proc_macro2::TokenStream;
 use quote::quote;
-use syn::{Data, DeriveInput, Ident};
+use syn::{Data, DeriveInput};
 
 use crate::{
     attributes::{container::EnumAttribute, variant::VariantAttribute},
-    not_an_enum,
-    utils::unwrap_attrs,
+    utils::{syn_err, unwrap_attrs},
 };
 
 pub(crate) fn inner_variant_names(
@@ -15,7 +14,7 @@ pub(crate) fn inner_variant_names(
 ) -> syn::Result<TokenStream> {
     let variants = match &input.data {
         Data::Enum(v) => &v.variants,
-        _ => return Err(not_an_enum()),
+        _ => syn_err!("This macro is only supported for enums."),
     };
 
     let mut names = vec![];
@@ -31,7 +30,7 @@ pub(crate) fn inner_variant_names(
             Some(ref name) => {
                 names.push(name.clone());
             }
-            _ => match eattrs.rename_variants {
+            _ => match eattrs.rename_variants.or_else(|| eattrs.rename_all) {
                 Some(ref inflection) => names.push(inflection.apply(&variant.ident.to_string())),
                 _ => names.push(variant.ident.to_string()),
             },
