@@ -4,13 +4,12 @@ mod macros;
 mod utils;
 
 use attributes::container::EnumAttribute;
-use darling::FromDeriveInput;
-use proc_macro2::Span;
+use deluxe::ParseAttributes;
 use syn::DeriveInput;
 
 use macros::{
-    from_str::inner_from_str, variant_count::inner_variant_count,
-    variant_names::inner_variant_names,
+    display::inner_display, from_str::inner_from_str, has_variant::inner_has_variant,
+    to_str::inner_to_str, variant_count::inner_variant_count, variant_names::inner_variant_names,
 };
 use utils::unwrap_attrs;
 
@@ -27,18 +26,18 @@ pub fn variant_count(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
 pub fn variant_names(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let ast = syn::parse_macro_input!(input as DeriveInput);
 
-    let attrs = unwrap_attrs!(EnumAttribute::from_derive_input(&ast));
+    let attrs = unwrap_attrs!(EnumAttribute::parse_attributes(&ast.attrs));
 
     let out = inner_variant_names(&ast, attrs).unwrap_or_else(|err| err.to_compile_error());
 
     out.into()
 }
 
-#[proc_macro_derive(EnumFromString, attributes(delve))]
+#[proc_macro_derive(EnumFromStr, attributes(delve))]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let ast = syn::parse_macro_input!(input as DeriveInput);
 
-    let attrs = unwrap_attrs!(EnumAttribute::from_derive_input(&ast));
+    let attrs = unwrap_attrs!(EnumAttribute::parse_attributes(&ast.attrs));
 
     let out = inner_from_str(&ast, attrs).unwrap_or_else(|err| err.to_compile_error());
 
@@ -55,17 +54,33 @@ pub fn variant_tuples(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     input
 }
 
-#[proc_macro_derive(EnumToString, attributes(delve))]
+#[proc_macro_derive(EnumToStr, attributes(delve))]
 pub fn to_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    input
+    let ast = syn::parse_macro_input!(input as DeriveInput);
+
+    let attrs = unwrap_attrs!(EnumAttribute::parse_attributes(&ast.attrs));
+
+    let out = inner_to_str(&ast, attrs).unwrap_or_else(|err| err.to_compile_error());
+
+    out.into()
+}
+
+#[proc_macro_derive(EnumDisplay, attributes(delve))]
+pub fn display(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let ast = syn::parse_macro_input!(input as DeriveInput);
+
+    let attrs = unwrap_attrs!(EnumAttribute::parse_attributes(&ast.attrs));
+
+    let out = inner_display(&ast, attrs).unwrap_or_else(|err| err.to_compile_error());
+
+    out.into()
 }
 
 #[proc_macro_derive(EnumHasVariant)]
 pub fn has_variant(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    input
-}
+    let ast = syn::parse_macro_input!(input as DeriveInput);
 
-#[proc_macro_derive(EnumDiscriminant)]
-pub fn discriminant(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    input
+    let out = inner_has_variant(&ast).unwrap_or_else(|err| err.to_compile_error());
+
+    out.into()
 }

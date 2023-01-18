@@ -1,4 +1,4 @@
-use darling::FromAttributes;
+use deluxe::ParseAttributes;
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::{Data, DeriveInput, Fields};
@@ -24,9 +24,9 @@ pub(crate) fn inner_from_str(
     let mut cases = vec![];
 
     for variant in variants {
-        let vattrs = unwrap_attrs!(VariantAttribute::from_attributes(&variant.attrs)?);
+        let vattrs = unwrap_attrs!(VariantAttribute::parse_attributes(&variant.attrs)?);
 
-        if vattrs.skip.is_some() {
+        if vattrs.skip {
             continue;
         }
 
@@ -61,7 +61,7 @@ pub(crate) fn inner_from_str(
         let vname = &variant.ident;
 
         for f in from {
-            if vattrs.ascii_case_insensitive.is_none() {
+            if !vattrs.ascii_case_insensitive {
                 cases.push(quote! {
                     #f => ::core::result::Result::Ok(#name::#vname #params)
                 });

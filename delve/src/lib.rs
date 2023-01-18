@@ -17,11 +17,7 @@ pub trait VariantNames {
 }
 
 pub trait HasVariant {
-    fn has_variant(&self, variant: String) -> bool;
-}
-
-pub trait Discriminant {
-    fn discriminant(&self) -> usize;
+    fn has_variant(variant: &str) -> bool;
 }
 
 pub trait FieldNames {

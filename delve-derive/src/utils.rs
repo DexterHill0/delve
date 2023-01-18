@@ -13,7 +13,7 @@ macro_rules! unwrap_attrs {
     ) => {
         match $($ident)::*($($args)*) {
             Ok(a) => a,
-            Err(e) => return e.write_errors().into()
+            Err(e) => return e.to_compile_error().into()
         }
     }
 }

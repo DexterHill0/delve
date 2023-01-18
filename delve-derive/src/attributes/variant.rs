@@ -1,15 +1,47 @@
-use darling::FromAttributes;
+use deluxe::{ParseAttributes, ParseMetaItem};
+use syn::{ExprClosure, Ident, LitStr, Token};
 
-#[derive(Debug, FromAttributes)]
-#[darling(attributes(delve))]
+#[derive(Debug, ParseAttributes)]
+#[deluxe(attributes(delve))]
 pub(crate) struct VariantAttribute {
-    pub skip: Option<bool>,
-    pub default: Option<bool>,
-    pub ascii_case_insensitive: Option<bool>,
+    #[deluxe(default)]
+    pub skip: bool,
 
+    #[deluxe(default)]
+    pub ascii_case_insensitive: bool,
+
+    #[deluxe(default)]
     pub rename_variant: Option<String>,
 
-    #[darling(multiple)]
+    #[deluxe(default, append)]
     pub from: Vec<String>,
+
+    #[deluxe(default)]
     pub to: Option<String>,
+
+    #[deluxe(default)]
+    pub display: Option<DisplayValue>,
+}
+
+#[derive(Debug)]
+pub(crate) enum DisplayValue {
+    ExternFn(Ident),
+    String(String),
+
+    Closure(ExprClosure),
+}
+
+impl ParseMetaItem for DisplayValue {
+    fn parse_meta_item(
+        input: deluxe::____private::ParseStream,
+        _mode: deluxe::ParseMode,
+    ) -> deluxe::Result<Self> {
+        if input.peek(Token![|]) {
+            Ok(DisplayValue::Closure(input.parse::<ExprClosure>()?))
+        } else if input.peek(Ident) {
+            Ok(DisplayValue::ExternFn(input.parse::<Ident>()?))
+        } else {
+            Ok(DisplayValue::String(input.parse::<LitStr>()?.value()))
+        }
+    }
 }

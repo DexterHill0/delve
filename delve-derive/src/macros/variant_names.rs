@@ -1,4 +1,4 @@
-use darling::FromAttributes;
+use deluxe::ParseAttributes;
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::{Data, DeriveInput};
@@ -20,9 +20,9 @@ pub(crate) fn inner_variant_names(
     let mut names = vec![];
 
     for variant in variants {
-        let vattrs = unwrap_attrs!(VariantAttribute::from_attributes(&variant.attrs)?);
+        let vattrs = unwrap_attrs!(VariantAttribute::parse_attributes(&variant.attrs)?);
 
-        if vattrs.skip.is_some() {
+        if vattrs.skip {
             continue;
         }
 

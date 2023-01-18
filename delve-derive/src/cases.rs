@@ -1,4 +1,6 @@
 use darling::FromMeta;
+use deluxe::ParseMetaItem;
+use syn::LitStr;
 
 use crate::utils::syn_err;
 
@@ -13,9 +15,14 @@ pub(crate) enum Inflection {
     Kebab,
 }
 
-impl FromMeta for Inflection {
-    fn from_string(value: &str) -> darling::Result<Self> {
-        Inflection::try_from(value.to_string()).map_err(|e| e.into())
+impl ParseMetaItem for Inflection {
+    fn parse_meta_item(
+        input: deluxe::____private::ParseStream,
+        _mode: deluxe::ParseMode,
+    ) -> deluxe::Result<Self> {
+        let string: LitStr = input.parse()?;
+
+        Inflection::try_from(string.value()).map_err(|e| e.into())
     }
 }
 

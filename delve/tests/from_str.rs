@@ -1,10 +1,10 @@
 use std::str::FromStr;
 
-use delve::EnumFromString;
+use delve::EnumFromStr;
 
 #[test]
 fn test_plain() {
-    #[derive(Debug, PartialEq, EnumFromString)]
+    #[derive(Debug, PartialEq, EnumFromStr)]
     #[allow(dead_code)]
     enum Week {
         Sunday,
@@ -22,7 +22,7 @@ fn test_plain() {
 
 #[test]
 fn test_attrs() {
-    #[derive(Debug, PartialEq, EnumFromString)]
+    #[derive(Debug, PartialEq, EnumFromStr)]
     #[allow(dead_code)]
     #[delve(rename_variants = "uppercase")]
     enum Week {

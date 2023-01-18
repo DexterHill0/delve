@@ -8,8 +8,8 @@ keywords = ["enum", "string", "macros", "proc-macros", "inspect"]
 categories = ["development-tools::procedural-macro-helpers", "parsing"]
 
 documentation = ""
-homepage = ""
-repository = ""
+homepage = "https://github.com/DexterHill0/delve"
+repository = "https://github.com/DexterHill0/delve"
 readme = "../README.md"
 
 [dependencies]
