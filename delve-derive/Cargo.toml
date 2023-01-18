@@ -1,0 +1,20 @@
+[package]
+name = "delve-derive"
+version = "0.1.0"
+edition = "2021"
+authors = ["@DexterHill0"]
+license = "MIT"
+
+description = ""
+keywords = ["enum", "string", "macros", "proc-macros", "inspect"]
+categories = ["development-tools::procedural-macro-helpers", "parsing"]
+
+[lib]
+proc-macro = true
+name = "delve_derive"
+
+[dependencies]
+heck = "0.4"
+proc-macro2 = "1.0"
+quote = "1.0"
+syn = { version = "1.0", features = ["parsing", "extra-traits"] }
