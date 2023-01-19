@@ -1,4 +1,5 @@
-use delve::{EnumHasVariant, HasVariant};
+use delve::HasVariant;
+use delve_derive::EnumHasVariant;
 
 #[derive(Debug, EnumHasVariant)]
 #[allow(dead_code)]

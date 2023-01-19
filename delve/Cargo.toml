@@ -3,18 +3,26 @@ name = "delve"
 version = "0.1.0"
 edition = "2021"
 
-description = ""
+description = "Provides a number of macros that make working with enums and strings more convenient."
 keywords = ["enum", "string", "macros", "proc-macros", "inspect"]
 categories = ["development-tools::procedural-macro-helpers", "parsing"]
 
-documentation = ""
+documentation = "https://docs.rs/delve"
 homepage = "https://github.com/DexterHill0/delve"
 repository = "https://github.com/DexterHill0/delve"
 readme = "../README.md"
 
 [dependencies]
+delve-derive = { path = "../delve-derive", optional = true, version = "0.1.0" }
+
+[dev-dependencies]
 delve-derive = { path = "../delve-derive", version = "0.1.0" }
 
 [features]
 default = ["std"]
 std = []
+derive = ["delve-derive"]
+
+[package.metadata.docs.rs]
+features = ["derive"]
+no-deps = true

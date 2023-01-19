@@ -4,7 +4,7 @@ use quote::quote;
 use syn::{Data, DeriveInput, Fields};
 
 use crate::{
-    attributes::{container::EnumAttribute, field::FieldAttributes},
+    attributes::{container::EnumAttribute, field::FieldAttribute},
     utils::syn_err,
 };
 
@@ -31,7 +31,7 @@ pub(crate) fn inner_variant_fields(
                 let mut names = vec![];
 
                 for n in &named.named {
-                    let fattrs = FieldAttributes::parse_attributes(&n.attrs)?;
+                    let fattrs = FieldAttribute::parse_attributes(&n.attrs)?;
 
                     if fattrs.skip {
                         continue;

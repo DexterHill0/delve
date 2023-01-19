@@ -1,4 +1,5 @@
-use delve::EnumDisplay;
+
+use delve_derive::EnumDisplay;
 
 #[test]
 fn test() {

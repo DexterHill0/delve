@@ -1,4 +1,5 @@
-use delve::{EnumVariantCount, VariantCount};
+use delve::VariantCount;
+use delve_derive::EnumVariantCount;
 
 #[derive(Debug, EnumVariantCount)]
 #[allow(dead_code)]

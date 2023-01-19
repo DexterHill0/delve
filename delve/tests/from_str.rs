@@ -1,6 +1,6 @@
-use std::str::FromStr;
+use core::str::FromStr;
 
-use delve::EnumFromStr;
+use delve_derive::EnumFromStr;
 
 #[test]
 fn test_plain() {

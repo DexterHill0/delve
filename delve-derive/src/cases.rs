@@ -3,8 +3,9 @@ use syn::LitStr;
 
 use crate::utils::syn_err;
 
+/// The different kinds of cases that am ident can be converted to.
 #[derive(Copy, Clone, Debug)]
-pub(crate) enum Inflection {
+pub enum Inflection {
     Lower,
     Upper,
     Camel,

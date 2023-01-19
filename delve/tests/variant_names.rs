@@ -1,4 +1,5 @@
-use delve::{EnumVariantNames, VariantNames};
+use delve::VariantNames;
+use delve_derive::EnumVariantNames;
 
 #[test]
 fn test_plain() {

@@ -1,4 +1,5 @@
-use delve::{EnumFields, FieldNames};
+use delve::FieldNames;
+use delve_derive::EnumFields;
 
 #[test]
 fn test_plain() {
@@ -54,5 +55,3 @@ fn test_attrs() {
         Week::Friday { a: true, b: false }.field_names()
     );
 }
-
-// TODO: check scoping of `display`!

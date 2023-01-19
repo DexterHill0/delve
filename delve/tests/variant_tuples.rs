@@ -1,4 +1,5 @@
-use delve::{EnumTuples, TupleCount};
+use delve::TupleCount;
+use delve_derive::EnumTuples;
 
 #[derive(Debug, PartialEq, EnumTuples)]
 #[allow(dead_code)]

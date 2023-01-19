@@ -1,7 +1,6 @@
 use deluxe::ParseAttributes;
-//use proc_macro::{Ident, Span};
-use proc_macro2::{Ident, Span, TokenStream};
-use quote::quote;
+use proc_macro2::TokenStream;
+use quote::{format_ident, quote};
 use syn::{Data, DeriveInput, Fields};
 
 use crate::{
@@ -43,7 +42,7 @@ pub(crate) fn inner_display(
                     .unnamed
                     .iter()
                     .enumerate()
-                    .map(|(i, _)| Ident::new(&format!("_{}", i), Span::call_site()))
+                    .map(|(i, _)| format_ident!("_{}", i))
                     .collect::<Vec<_>>();
 
                 (named.clone(), quote! { ( #(#named),* ) })
@@ -94,7 +93,7 @@ pub(crate) fn inner_display(
     }
 
     Ok(quote! {
-        impl ::core::fmt::Display for #name #ty_generics #where_clause {
+        impl #impl_generics ::core::fmt::Display for #name #ty_generics #where_clause {
             fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
                 match self {
                     #(

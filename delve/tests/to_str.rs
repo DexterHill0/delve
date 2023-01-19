@@ -1,4 +1,4 @@
-use delve::EnumToStr;
+use delve_derive::EnumToStr;
 
 #[test]
 fn test_plain() {
@@ -41,6 +41,7 @@ fn test_attrs() {
 
 #[test]
 #[should_panic]
+#[allow(unused_must_use)]
 fn test_skipped() {
     #[derive(Debug, PartialEq, EnumToStr)]
     #[allow(dead_code)]

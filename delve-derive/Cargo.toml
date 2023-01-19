@@ -5,13 +5,14 @@ edition = "2021"
 authors = ["@DexterHill0"]
 license = "MIT"
 
-description = ""
+description = "Provides a number of macros that make working with enums and strings more convenient."
 keywords = ["enum", "string", "macros", "proc-macros", "inspect"]
 categories = ["development-tools::procedural-macro-helpers", "parsing"]
 
-documentation = ""
+documentation = "https://docs.rs/delve"
 homepage = "https://github.com/DexterHill0/delve"
 repository = "https://github.com/DexterHill0/delve"
+readme = "../README.md"
 
 [lib]
 proc-macro = true
@@ -23,3 +24,6 @@ proc-macro2 = "1.0"
 quote = "1.0"
 syn = { version = "1.0", features = ["full", "parsing", "extra-traits"] }
 deluxe = "0.1.0"
+
+[package.metadata.docs.rs]
+no-deps = true
