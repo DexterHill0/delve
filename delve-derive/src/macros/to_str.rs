@@ -1,4 +1,3 @@
-use darling::FromAttributes;
 use deluxe::ParseAttributes;
 use proc_macro2::TokenStream;
 use quote::quote;
@@ -6,7 +5,7 @@ use syn::{Data, DeriveInput};
 
 use crate::{
     attributes::{container::EnumAttribute, variant::VariantAttribute},
-    utils::{syn_err, unwrap_attrs},
+    utils::syn_err,
 };
 
 pub(crate) fn inner_to_str(input: &DeriveInput, eattrs: EnumAttribute) -> syn::Result<TokenStream> {
@@ -22,7 +21,7 @@ pub(crate) fn inner_to_str(input: &DeriveInput, eattrs: EnumAttribute) -> syn::R
     let mut cases = vec![];
 
     for variant in variants {
-        let vattrs = unwrap_attrs!(VariantAttribute::parse_attributes(&variant.attrs)?);
+        let vattrs = VariantAttribute::parse_attributes(&variant.attrs)?;
 
         if vattrs.skip {
             continue;

@@ -5,7 +5,7 @@ use syn::{Data, DeriveInput};
 
 use crate::{
     attributes::{container::EnumAttribute, variant::VariantAttribute},
-    utils::{syn_err, unwrap_attrs},
+    utils::syn_err,
 };
 
 pub(crate) fn inner_variant_names(
@@ -20,7 +20,7 @@ pub(crate) fn inner_variant_names(
     let mut names = vec![];
 
     for variant in variants {
-        let vattrs = unwrap_attrs!(VariantAttribute::parse_attributes(&variant.attrs)?);
+        let vattrs = VariantAttribute::parse_attributes(&variant.attrs)?;
 
         if vattrs.skip {
             continue;

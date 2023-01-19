@@ -9,7 +9,8 @@ use syn::DeriveInput;
 
 use macros::{
     display::inner_display, from_str::inner_from_str, has_variant::inner_has_variant,
-    to_str::inner_to_str, variant_count::inner_variant_count, variant_names::inner_variant_names,
+    to_str::inner_to_str, variant_count::inner_variant_count, variant_fields::inner_variant_fields,
+    variant_names::inner_variant_names, variant_tuples::inner_variant_tuples,
 };
 use utils::unwrap_attrs;
 
@@ -46,11 +47,27 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 
 #[proc_macro_derive(EnumFields, attributes(delve))]
 pub fn variant_fields(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    input
+    let ast = syn::parse_macro_input!(input as DeriveInput);
+
+    let attrs = unwrap_attrs!(EnumAttribute::parse_attributes(&ast.attrs));
+
+    let out = inner_variant_fields(&ast, attrs).unwrap_or_else(|err| err.to_compile_error());
+
+    out.into()
 }
 
 #[proc_macro_derive(EnumTuples)]
 pub fn variant_tuples(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    let ast = syn::parse_macro_input!(input as DeriveInput);
+
+    let out = inner_variant_tuples(&ast).unwrap_or_else(|err| err.to_compile_error());
+
+    out.into()
+}
+
+#[proc_macro_derive(EnumModify, attributes(delve))]
+pub fn modify_variant(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    // TODO !!!!!!!!!!!!!!!!!!!!!!!!
     input
 }
 

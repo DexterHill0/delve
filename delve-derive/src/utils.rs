@@ -1,14 +1,5 @@
 macro_rules! unwrap_attrs {
     (
-        $($ident:ident)::* ($($args:tt)*) ?
-    ) => {
-        match $($ident)::*($($args)*) {
-            Ok(a) => a,
-            Err(e) => return Err(e.into())
-        }
-    };
-
-    (
         $($ident:ident)::* ($($args:tt)*)
     ) => {
         match $($ident)::*($($args)*) {

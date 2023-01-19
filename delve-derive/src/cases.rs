@@ -1,4 +1,3 @@
-use darling::FromMeta;
 use deluxe::ParseMetaItem;
 use syn::LitStr;
 

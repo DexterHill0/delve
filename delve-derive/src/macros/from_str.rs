@@ -5,7 +5,7 @@ use syn::{Data, DeriveInput, Fields};
 
 use crate::{
     attributes::{container::EnumAttribute, variant::VariantAttribute},
-    utils::{syn_err, unwrap_attrs},
+    utils::syn_err,
 };
 
 pub(crate) fn inner_from_str(
@@ -24,7 +24,7 @@ pub(crate) fn inner_from_str(
     let mut cases = vec![];
 
     for variant in variants {
-        let vattrs = unwrap_attrs!(VariantAttribute::parse_attributes(&variant.attrs)?);
+        let vattrs = VariantAttribute::parse_attributes(&variant.attrs)?;
 
         if vattrs.skip {
             continue;
