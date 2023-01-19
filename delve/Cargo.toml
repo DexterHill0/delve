@@ -22,7 +22,7 @@ delve-derive = { workspace = true }
 [features]
 default = ["std"]
 std = []
-derive = ["delve-derive"]
+derive = ["dep:delve-derive"]
 
 [package.metadata.docs.rs]
 all-features = true
