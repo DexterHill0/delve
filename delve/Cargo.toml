@@ -1,6 +1,6 @@
 [package]
 name = "delve"
-version = "0.1.0"
+version = { workspace = true }
 edition = "2021"
 license = "MIT"
 
@@ -14,15 +14,18 @@ repository = "https://github.com/DexterHill0/delve"
 readme = "../README.md"
 
 [dependencies]
-delve-derive = { path = "../delve-derive", optional = true, version = "0.1.0" }
+delve-derive = { optional = true, workspace = true }
 
 [dev-dependencies]
-delve-derive = { path = "../delve-derive", version = "0.1.0" }
+delve-derive = { workspace = true }
 
 [features]
 default = ["std"]
 std = []
-derive = ["delve-derive"]
+derive = ["dep:delve-derive"]
 
 [package.metadata.docs.rs]
-features = ["derive"]
+all-features = true
+rustc-args = ["--cfg", "docsrs"]
+rustdoc-args = ["--cfg", "docsrs"]
+targets = ["x86_64-unknown-linux-gnu"]

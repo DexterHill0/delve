@@ -1,3 +1,4 @@
+#![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
 //! This crate provides `delve`'s macros.
 //!
 //! Refer to [`delve`](https://docs.rs/delve) for how to use them.
