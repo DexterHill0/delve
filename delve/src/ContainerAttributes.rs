@@ -25,3 +25,10 @@
 //!
 //! Renames all fields within all struct variants
 //!
+//! - `#[delve(resolve(<type>, <resolved>))]`
+//!
+//!     Only affects [`ModifyVariant`]. Resolves type aliased to a given type. If multiple aliases alias to the
+//!     same type, they will be implemented as if they were different type. The `resolve` attribute can be used to
+//!     stop that from happening.
+//!     - `#[delve(resolve(Foo, u16), resolve(Bar, u16))]` - `Foo` and `Bar` will now be implemented as a single `u16`.
+//!

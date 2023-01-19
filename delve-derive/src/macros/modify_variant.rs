@@ -36,6 +36,12 @@ pub(crate) fn inner_modify_variant(
     // `(Vec<Ident>, Vec<String>)` -> `(struct field idents, struct field idents with inflections applied)`
     let mut named_map: HashMap<&Type, HashMap<&Ident, (Vec<Ident>, Vec<String>)>> = HashMap::new();
 
+    let mut resolved: HashMap<syn::Type, syn::Type> = HashMap::new();
+
+    for (left, right) in eattrs.resolve {
+        resolved.insert(left, right);
+    }
+
     for variant in variants {
         let vname = &variant.ident;
 
@@ -58,8 +64,10 @@ pub(crate) fn inner_modify_variant(
                         continue;
                     }
 
+                    let ty = resolved.get(&un.ty).unwrap_or(&un.ty);
+
                     unnamed_map
-                        .entry(&un.ty)
+                        .entry(&ty)
                         .and_modify(|v| {
                             v.entry(&vname)
                                 .and_modify(|v| v.1.push(i))
@@ -88,8 +96,10 @@ pub(crate) fn inner_modify_variant(
                         },
                     };
 
+                    let ty = resolved.get(&n.ty).unwrap_or(&n.ty);
+
                     named_map
-                        .entry(&n.ty)
+                        .entry(&ty)
                         .and_modify(|v| {
                             v.entry(&vname)
                                 .and_modify(|v| {

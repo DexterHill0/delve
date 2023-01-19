@@ -88,3 +88,22 @@ fn test_attrs() {
         <Week<bool> as ModifyField<&str, bool>>::get_field(&thurs, "bar")
     );
 }
+
+#[test]
+fn test_resolve() {
+    type Foo = u16;
+    type Bar = u16;
+
+    #[derive(Debug, PartialEq, EnumModify)]
+    #[allow(dead_code)]
+    #[delve(rename_fields = "uppercase")]
+    #[delve(resolve(Foo, u16), resolve(Bar, u16))]
+    enum Week {
+        Sunday,
+        Monday { a: Foo, b: Bar },
+        Tuesday,
+        Thursday,
+        Friday,
+        Saturday,
+    }
+}

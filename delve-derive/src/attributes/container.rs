@@ -13,4 +13,7 @@ pub(crate) struct EnumAttribute {
 
     #[deluxe(default)]
     pub rename_variants: Option<Inflection>,
+
+    #[deluxe(default, append)]
+    pub resolve: Vec<(syn::Type, syn::Type)>,
 }

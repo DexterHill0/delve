@@ -6,21 +6,11 @@ Delve provides a number of macros that make working with enums and strings more 
 
 # Including Delve
 
-`delve` can be included one of two ways:
-
-- Include both `delve` and `delve-derive` separately:
+`delve` can be included using:
 
 ```toml
 [dependencies]
-delve = "0.1.0"
-delve-derive = "0.1.0"
-```
-
-- Include `delve` and enable the `derive` feature flag:
-
-```toml
-[dependencies]
-delve = { version = "0.1.0", features = ["derive"] }
+delve = { version = "0.2.0", features = ["derive"] }
 ```
 
 # Derive Macros

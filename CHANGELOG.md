@@ -1,3 +1,7 @@
+## 0.2.0 (`delve-derive`)
+
+- Added `resolve` to container attributes to fix multiple type aliases poiting to the same type being considered different types.
+
 ## 0.1.0 (`delve`, `delve-derive`)
 
 Released!
