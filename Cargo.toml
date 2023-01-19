@@ -3,6 +3,3 @@ members = [
     "delve",
     "delve-derive",
 ]
-
-[workspace.metadata.docs.rs]
-rustdoc-args = ["--workspace"]
