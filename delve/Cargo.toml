@@ -2,6 +2,7 @@
 name = "delve"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
 
 description = "Provides a number of macros that make working with enums and strings more convenient."
 keywords = ["enum", "string", "macros", "proc-macros", "inspect"]
