@@ -10,7 +10,7 @@ Delve provides a number of macros that make working with enums and strings more 
 
 ```toml
 [dependencies]
-delve = { version = "0.2.0", features = ["derive"] }
+delve = { version = "0.3.0", features = ["derive"] }
 ```
 
 # Derive Macros

@@ -19,7 +19,7 @@ pub mod TupleAttributes;
 pub mod VariantAttributes;
 
 /// Implements `delve::VariantCount` which provides the number of variants within an enum.
-/// See [`VariantCount`]: trait.VariantCount.html for an example implementation.
+/// See [`VariantCount`] for an example implementation.
 #[cfg(feature = "derive")]
 pub use delve_derive::EnumVariantCount;
 
@@ -64,8 +64,8 @@ pub use delve_derive::EnumTuples;
 #[cfg(feature = "derive")]
 pub use delve_derive::EnumModify;
 
-/// Implements `From<TheEnum> for &'static str` on an enum.
-/// The Rust `std` provides a blanket implementation for the reverse so `Into<&'static str> for TheEnum` is also implemented.
+/// Implements `From<TheEnum> for &'static str` and `From<&TheEnum> for &'static str` on an enum.
+/// The Rust `std` provides a blanket implementation for the reverse so `Into<&'static str> for (&)TheEnum` is also implemented.
 ///
 /// # Example
 ///
@@ -231,9 +231,9 @@ pub trait TupleCount {
 ///
 /// let obj = Thing::Object { x: 0, y: 0 }
 ///
-/// assert_eq!(Some(&0), obh.get_field("x"));
+/// assert_eq!(Some(&0), obj.get_field("x"));
 /// obj.set_field("x", 100);
-/// assert_eq!(Some(&100), obh.get_field("x"));
+/// assert_eq!(Some(&100), obj.get_field("x"));
 /// ```
 ///
 /// # Note

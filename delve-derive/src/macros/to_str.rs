@@ -1,7 +1,7 @@
 use deluxe::ParseAttributes;
 use proc_macro2::TokenStream;
 use quote::quote;
-use syn::{Data, DeriveInput};
+use syn::{parse_quote, Data, DeriveInput};
 
 use crate::{
     attributes::{container::EnumAttribute, variant::VariantAttribute},
@@ -17,6 +17,15 @@ pub(crate) fn inner_to_str(input: &DeriveInput, eattrs: EnumAttribute) -> syn::R
     let name = &input.ident;
 
     let (impl_generics, ty_generics, where_clause) = input.generics.split_for_impl();
+
+    // this keeps the original lifetimes, as well as adding our own, as we are cloning the input
+    let mut generics = input.generics.clone();
+    generics
+        .params
+        .push(syn::GenericParam::Lifetime(syn::LifetimeDef::new(
+            parse_quote!('__delve_to_str),
+        )));
+    let (delve_generics, _, _) = generics.split_for_impl();
 
     let mut cases = vec![];
 
@@ -51,6 +60,15 @@ pub(crate) fn inner_to_str(input: &DeriveInput, eattrs: EnumAttribute) -> syn::R
     Ok(quote! {
         impl #impl_generics ::core::convert::From<#name #ty_generics> for &'static str #where_clause {
             fn from(value: #name #ty_generics) -> Self {
+                match value {
+                    #( #cases, )*
+                    _ => panic!(concat!("`Into<&'static str>/From<", #str_name, "> for &'static str` called on skipped variant"))
+                }
+            }
+        }
+
+        impl #delve_generics ::core::convert::From<&'__delve_to_str #name #ty_generics> for &'static str #where_clause {
+            fn from(value: &'__delve_to_str #name #ty_generics) -> Self {
                 match value {
                     #( #cases, )*
                     _ => panic!(concat!("`Into<&'static str>/From<", #str_name, "> for &'static str` called on skipped variant"))
